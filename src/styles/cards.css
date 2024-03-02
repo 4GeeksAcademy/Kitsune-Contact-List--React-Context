@@ -1,0 +1,19 @@
+.card {
+    width: 1200px;
+     
+    }
+    
+.card-img-top{
+    border-radius: 50%;
+    height: 150px;
+    width: 150px;
+    }
+
+.card-tittle {
+   justify-content: space-between;
+}
+
+.card-body{
+    text-decoration: none;
+}
+
