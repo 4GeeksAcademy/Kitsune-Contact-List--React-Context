@@ -8,6 +8,7 @@ import { Single } from "./views/single";
 import injectContext from "./store/appContext";
 import AddContact from "./views/AddContact";
 import ContactCard from "./component/ContactCard";
+import EditContact from "./views/EditContact";
 // import { Navbar } from "./component/navbar";
 // import { Footer } from "./component/footer";
 
@@ -29,6 +30,7 @@ const Layout = () => {
 						<Route path="/:theid" element={<ContactCard/>}/>
 						<Route path="/new-contact" element={<AddContact/>}/>
 						<Route path="*" element={<h1>Not found!</h1>} />
+						<Route path="/edit-contact/:theid" element={<EditContact/>}/>
 					</Routes>
 					{/* <Footer /> */}
 				</ScrollToTop>

@@ -26,7 +26,7 @@ const Contact = () => {
 
 {/* Card */}
 
-        <div className="container ">
+        <div className="container " style={{paddingTop: "10px"}}>
 
 {/* Button add contacto*/}
     <div className='d-grid gap-2 d-md-flex justify-content-md-end'style={{ marginBottom: "15px"}}>
@@ -39,7 +39,7 @@ const Contact = () => {
             {store.contact.map((item, index)=>{
               return (
                
-              <li
+              <li key={item.id}
                 
                 className="list-group-item  d-flex justify-content-between">
                 

@@ -1,15 +1,19 @@
 //FORMULARIO --> ARREGLAR QUE SE PUEDA ALMACENAR INFORMACIÓN
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useActionData } from 'react-router-dom';
 import PropTypes from "prop-types";
+import { Context } from '../store/appContext';
 
 const AddContact = ( props) => {
+
+    const { store, actions } = useContext(Context);
+
     const [contact, setContact] = useState ({
-        full_Name : props.contact ? props.contact.full_Name: "" ,
+        full_name : props.contact ? props.contact.full_name: "" ,
         email: props.contact ? props.contact.email :""  ,
         phone: props.contact ? props.contact.phone :"" ,
-        address: props.contact ? props.contact.adress : "" ,
+        address: props.contact ? props.contact.address : "" ,
     })
 
     const handleInputChange = (e) => {
@@ -22,25 +26,28 @@ const AddContact = ( props) => {
 
 const addContact = () => {
     const newContactData = {
-        full_Name: contact.full_Name,
+        full_name: contact.full_name,
         email: contact.email,
         phone: contact.phone,
-        address: contact.address};
+        address: contact.address,
+        agenda_slug: "KitsuneDai",
+    };
 
-    fetch("https://playground.4geeks.com/apis/fake/contact/agenda/KitsuneDai", {
+    fetch("https://playground.4geeks.com/apis/fake/contact/", {
         method: "POST",
         body: JSON.stringify(newContactData),
         headers: { "Content-Type": "application/json" },
       })
         .then((response) => {
-          return response.json()
+            if (!response.ok) throw Error(response.statusText);
+            return response.json();
           ;
         })
         .then((data) => {
           console.log("POST->", data);
         })
         .catch((err) => {
-            console.error(err);
+            console.log(err);
         });
     
 }
@@ -52,9 +59,9 @@ const addContact = () => {
         <h1 className='tittle' style={{textAlign:"center"}}> <strong>Add a new contact </strong> </h1>
         <div className="mb-3"> 
             <label htmlFor="inputFullname" className="form-label">Full Name</label>
-            <input type="text" className="form-control" id="inputFullname"   name="full_Name" placeholder="Full Name"
+            <input type="text" className="form-control" id="inputFullname"   name="full_name" placeholder="Full Name"
            onChange={handleInputChange}
-           value={contact.full_Name}
+           value={contact.full_name}
             /> 
         </div>  
         <div className="mb-3">
@@ -74,16 +81,18 @@ const addContact = () => {
         </div>
         <div className="mb-3">
             <label htmlFor="inputAddress" className="form-label">Address</label>
-            <input type="text" className="form-control" id="inputAddress" rows="3"   name="address" placeholder="Enter adress"
+            <input type="text" className="form-control" id="inputAddress" rows="3"   name="address" placeholder="Enter address"
             onChange={handleInputChange}
             value={contact.address}
             /> 
         </div>
 
-      
+        <Link to={"/"}>
         <div className='d-grid gap-2'>
         <button onClick={addContact} className="  btn btn-primary" type="button">save</button>
+ {/* BOTÓN SI addContact estuviera en el flux ---> <button onClick={actions.addcontact()} className="  btn btn-primary" type="button">save</button> */}
         </div>
+        </Link>
         
 
         <Link to={"/"}>

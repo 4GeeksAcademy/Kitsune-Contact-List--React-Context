@@ -78,6 +78,57 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.catch((err)=>err)
 			},
 
+
+			//<-----------------CONSTANTE PARA AÑADIR CONTACTO----------------------->
+			// addContact : () => {
+			// 	const store = getStore();
+			// 	const newContactData = {
+			// 		full_name:store.contact.full_name,
+			// 		email: store.contact.email,
+			// 		phone: store.contact.phone,
+			// 		address: store.contact.address,
+			// 		agenda_slug: "KitsuneDai",
+			// 	};
+			
+			// 	fetch("https://playground.4geeks.com/apis/fake/contact", {
+			// 		method: "POST",
+			// 		body: JSON.stringify(newContactData),
+			// 		headers: { "Content-Type": "application/json" },
+			// 	  })
+			// 		.then((response) => {
+			// 			if (!response.ok) throw Error(response.statusText);
+			// 			return response.json();
+			// 		  ;
+			// 		})
+			// 		.then((data) => {
+			// 		  console.log("POST->", data);
+					  
+			// 		  fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/KitsuneDai")
+			// 		  .then((response)=>response.json())
+			// 		  .then ((data) => setStore({ contact: data }))
+			// 		})
+			// 		.catch((err) => {console.log(err);
+			// 		});
+				
+			// },
+				
+
+			//<-----------------CONSTANTE AÚN POR DEFINIR----------------------->
+			//  updateContact : (updatedContact) => {
+			// 	const [contacts, setContacts] = useState([]);
+
+			// 		// Encuentra el índice del contacto que deseas actualizar
+			// 		const index = contacts.findIndex(contact => contact.id === updatedContact.id);
+			// 		if (index !== -1) {
+			// 			// Actualiza el contacto en la posición correspondiente del arreglo de contactos
+			// 			const updatedContacts = [...contacts];
+			// 			updatedContacts[index] = updatedContact;
+			// 			setContacts(updatedContacts);
+			// 		} else {
+			// 			console.error("Contact not found for update");
+			// 		}
+			// 	},
+			
 			deleteContact: (indexDelete) => {
 				const requestOptions = {
 					method: "DELETE",
