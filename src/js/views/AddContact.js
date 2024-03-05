@@ -1,11 +1,13 @@
 //FORMULARIO --> ARREGLAR QUE SE PUEDA ALMACENAR INFORMACIÓN
 
-import React, { useState, useContext } from 'react';
-import { Link, useActionData } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from "prop-types";
 import { Context } from '../store/appContext';
 
 const AddContact = ( props) => {
+
+    
 
     const { store, actions } = useContext(Context);
 
@@ -23,34 +25,6 @@ const AddContact = ( props) => {
             [name]: value
         }));
     }
-
-const addContact = () => {
-    const newContactData = {
-        full_name: contact.full_name,
-        email: contact.email,
-        phone: contact.phone,
-        address: contact.address,
-        agenda_slug: "KitsuneDai",
-    };
-
-    fetch("https://playground.4geeks.com/apis/fake/contact/", {
-        method: "POST",
-        body: JSON.stringify(newContactData),
-        headers: { "Content-Type": "application/json" },
-      })
-        .then((response) => {
-            if (!response.ok) throw Error(response.statusText);
-            return response.json();
-          ;
-        })
-        .then((data) => {
-          console.log("POST->", data);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    
-}
     
   return (
     < >
@@ -89,8 +63,7 @@ const addContact = () => {
 
         <Link to={"/"}>
         <div className='d-grid gap-2'>
-        <button onClick={addContact} className="  btn btn-primary" type="button">save</button>
- {/* BOTÓN SI addContact estuviera en el flux ---> <button onClick={actions.addcontact()} className="  btn btn-primary" type="button">save</button> */}
+        <button onClick={()=>actions.addContact(contact)} className="  btn btn-primary" type="button">save</button>
         </div>
         </Link>
         

@@ -52,7 +52,10 @@ const Contact = () => {
                         <div className="card-tittle d-flex">
                           <h5>{item.full_name}</h5>
                           <div className='icons'>
+
+                          <Link to={"/edit-contact/" + index}>
                           <FaPencil style={{marginRight: "30px"}}/>
+                          </Link>
                           <IoTrashSharp onClick={() => actions.deleteContact(item.id)}/>
                           </div>
                         </div>  

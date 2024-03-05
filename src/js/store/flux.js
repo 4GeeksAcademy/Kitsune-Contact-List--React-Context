@@ -70,7 +70,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				//reset the global store
 				setStore({ demo: demo });
 			},
-
+			
+			//<-----------------CONSTANTE PARA TRAER TODOS LOS CONTACTOS----------------------->
 			LoadContact: () => {
 				fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/KitsuneDai")
 				.then((response)=>response.json())
@@ -80,55 +81,63 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			//<-----------------CONSTANTE PARA AÑADIR CONTACTO----------------------->
-			// addContact : () => {
-			// 	const store = getStore();
-			// 	const newContactData = {
-			// 		full_name:store.contact.full_name,
-			// 		email: store.contact.email,
-			// 		phone: store.contact.phone,
-			// 		address: store.contact.address,
-			// 		agenda_slug: "KitsuneDai",
-			// 	};
+			addContact : (contact) => {
+				const store = getStore();
+				console.log(contact);
+				const newContactData = {
+					full_name:contact.full_name,
+					email: contact.email,
+					phone: contact.phone,
+					address: contact.address,
+					agenda_slug: "KitsuneDai",
+				};
 			
-			// 	fetch("https://playground.4geeks.com/apis/fake/contact", {
-			// 		method: "POST",
-			// 		body: JSON.stringify(newContactData),
-			// 		headers: { "Content-Type": "application/json" },
-			// 	  })
-			// 		.then((response) => {
-			// 			if (!response.ok) throw Error(response.statusText);
-			// 			return response.json();
-			// 		  ;
-			// 		})
-			// 		.then((data) => {
-			// 		  console.log("POST->", data);
-					  
-			// 		  fetch ("https://playground.4geeks.com/apis/fake/contact/agenda/KitsuneDai")
-			// 		  .then((response)=>response.json())
-			// 		  .then ((data) => setStore({ contact: data }))
-			// 		})
-			// 		.catch((err) => {console.log(err);
-			// 		});
+				fetch("https://playground.4geeks.com/apis/fake/contact", {
+					method: "POST",
+					body: JSON.stringify(newContactData),
+					headers: { "Content-Type": "application/json" },
+				  })
+					.then((response) => {
+						if (!response.ok) throw Error(response.statusText);
+						return response.json();
+					  ;
+					})
+					.then((data) => {
+					  console.log("POST->", data);
+					  getActions().LoadContact() // RECARGA LA PÁGINA
+					})
+					.catch((err) => {console.log(err);
+					});
 				
-			// },
+			},
 				
 
 			//<-----------------CONSTANTE AÚN POR DEFINIR----------------------->
-			//  updateContact : (updatedContact) => {
-			// 	const [contacts, setContacts] = useState([]);
+			updateContact: (updatedContact) => {
+                // Obtener el store actual
+                const store = getStore();
 
-			// 		// Encuentra el índice del contacto que deseas actualizar
-			// 		const index = contacts.findIndex(contact => contact.id === updatedContact.id);
-			// 		if (index !== -1) {
-			// 			// Actualiza el contacto en la posición correspondiente del arreglo de contactos
-			// 			const updatedContacts = [...contacts];
-			// 			updatedContacts[index] = updatedContact;
-			// 			setContacts(updatedContacts);
-			// 		} else {
-			// 			console.error("Contact not found for update");
-			// 		}
-			// 	},
-			
+                // Buscar el índice del contacto que coincide con el ID del contacto actualizado
+                const index = store.contact.findIndex(contact => contact.id === updatedContact.id);
+
+                // Si se encuentra el contacto
+                if (index !== -1) {
+                    // Crear una nueva lista de contactos con el contacto actualizado en el índice correspondiente
+                    const updatedContacts = [
+                        ...store.contact.slice(0, index),
+                        updatedContact,
+                        ...store.contact.slice(index + 1)
+                    ];
+
+                    // Actualizar el store con la lista de contactos actualizada
+                    setStore({ contact: updatedContacts });
+                } else {
+                    console.error("No se encontró el contacto para actualizar");
+                }
+            },  
+    
+   
+			//<-----------------CONSTANTE PARA BORRAR CONTACTO Y RECARGAR LA PÁGINA----------------------->
 			deleteContact: (indexDelete) => {
 				const requestOptions = {
 					method: "DELETE",
