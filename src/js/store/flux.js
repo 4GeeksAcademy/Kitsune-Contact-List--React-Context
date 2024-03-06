@@ -82,7 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//<-----------------CONSTANTE PARA AÑADIR CONTACTO----------------------->
 			addContact : (contact) => {
-				const store = getStore();
+				 
 				console.log(contact);
 				const newContactData = {
 					full_name:contact.full_name,
@@ -104,7 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then((data) => {
 					  console.log("POST->", data);
-					  getActions().LoadContact() // RECARGA LA PÁGINA
+					  getActions().LoadContact()//RECARGA LA PÁGINA
 					})
 					.catch((err) => {console.log(err);
 					});
@@ -112,30 +112,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 				
 
-			//<-----------------CONSTANTE AÚN POR DEFINIR----------------------->
-			updateContact: (updatedContact) => {
-                // Obtener el store actual
-                const store = getStore();
+			//<-----------------CONSTANTE PARA EDITAR-----------------------> NO AGREGA LO NUEVO
+			updateContact: (theid, updatedContact) => {
+				// Get from store
+				const contactList = getStore().contact;
+				// Find contact index and update
+				const contactIndex = contactList.findIndex(contact => contact.id === theid);
+				if (contactIndex !== -1){
+					const updatedContactList  = [...contactList];
+					updatedContactList [contactIndex] = {...theid, ...updatedContact};
+					setStore({ contact: updatedContactList});
+				}
+				console.log("FLUX update funcionando");
+			},
 
-                // Buscar el índice del contacto que coincide con el ID del contacto actualizado
-                const index = store.contact.findIndex(contact => contact.id === updatedContact.id);
-
-                // Si se encuentra el contacto
-                if (index !== -1) {
-                    // Crear una nueva lista de contactos con el contacto actualizado en el índice correspondiente
-                    const updatedContacts = [
-                        ...store.contact.slice(0, index),
-                        updatedContact,
-                        ...store.contact.slice(index + 1)
-                    ];
-
-                    // Actualizar el store con la lista de contactos actualizada
-                    setStore({ contact: updatedContacts });
-                } else {
-                    console.error("No se encontró el contacto para actualizar");
-                }
-            },  
-    
    
 			//<-----------------CONSTANTE PARA BORRAR CONTACTO Y RECARGAR LA PÁGINA----------------------->
 			deleteContact: (indexDelete) => {
