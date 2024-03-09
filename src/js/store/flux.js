@@ -1,18 +1,18 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			],
+			// demo: [
+			// 	{
+			// 		title: "FIRST",
+			// 		background: "white",
+			// 		initial: "white"
+			// 	},
+			// 	{
+			// 		title: "SECOND",
+			// 		background: "white",
+			// 		initial: "white"
+			// 	}
+			// ],
 			contact: []
 		},
 		actions: {
@@ -53,8 +53,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			//<-----------------CONSTANTE PARA AÑADIR CONTACTO----------------------->
 			addContact : (contact) => {
-				 
-				console.log(contact);
+			 
 				const newContactData = {
 					full_name:contact.full_name,
 					email: contact.email,
@@ -74,7 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  ;
 					})
 					.then((data) => {
-					  console.log("POST->", data);
+					 
 					  getActions().LoadContact()//RECARGA LA PÁGINA
 					})
 					.catch((err) => {console.log(err);
