@@ -7,25 +7,24 @@ const EditContact = () => {
     const { theid } = useParams(); // Obtener los parámetros de la URL correctamente
     const navigate = useNavigate();
 
-    console.log("Store.contact--> ",store.contact);
-    console.log("TheID--> ", theid);
-   
 
     const [editContact, setEditContact] = useState({
         full_name: store.contact[parseInt(theid)].full_name,
         email: store.contact[parseInt(theid)].email,
         phone: store.contact[parseInt(theid)].phone,
-        address: store.contact[parseInt(theid)].address
+        address: store.contact[parseInt(theid)].address,
+        agenda_slug: store.contact[parseInt(theid)].agenda_slug,
+        id: store.contact[parseInt(theid)].id
     });
     
     const handleSubmit = (e) => {
         e.preventDefault(); //evita eventos de copy,paste,
-        actions.updateContact(parseInt(theid), editContact);
-        console.log("handleSubmit correcto");
-        console.log("actions.updateContact correcto");
+        actions.updateContact(editContact);
         (navigate("/")); // returns to contact list
-        console.log("Navigate correcto");
+
     }
+
+    
 
     return (
         <>
